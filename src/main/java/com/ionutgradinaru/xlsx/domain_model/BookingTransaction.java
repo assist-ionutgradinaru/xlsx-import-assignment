@@ -18,6 +18,8 @@ public class BookingTransaction {
   @Id
   @Column(name = "id", nullable = false)
   Long id;
+  @Column(name = "customer_name")
+  String customerName;
   Date bookingDate;
   @Column(name = "opportunity_id", unique = true)
   String opportunityId;
