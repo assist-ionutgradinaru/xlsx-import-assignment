@@ -16,6 +16,7 @@ import java.util.Date;
 public class BookingTransaction {
 
   @Id
+  @Column(name = "id", nullable = false)
   Long id;
   Date bookingDate;
   @Column(name = "opportunity_id", unique = true)
