@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class XlsxBookingTransaction {
+public class XlsxTransactionDto {
 
   @ExcelCellName("CustomerName")
   String customerName;

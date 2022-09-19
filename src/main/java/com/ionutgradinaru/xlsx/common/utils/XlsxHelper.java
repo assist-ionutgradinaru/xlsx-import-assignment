@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class XlsxHelper {
 
+  public static final int HEADER_INDEX_START = 2;
+  public static final String DATE_FORMAT = "dd/MM/yyyy";
   public static final CellAddress TOP_LEFT_CORNER = new CellAddress("A3");
   public static final CellAddress TOP_RIGHT_CORNER = new CellAddress("K3");
 
@@ -24,11 +26,11 @@ public class XlsxHelper {
     );
   }
 
-  public int skipRows(final XlsxDataRange range) {
+  public static int skipRows(final XlsxDataRange range) {
     return range.getStartCellAddress().getRow() - TOP_LEFT_CORNER.getRow();
   }
 
-  public int limitRows(final XlsxDataRange range) {
+  public static int limitRows(final XlsxDataRange range) {
     return range.getEndCellAddress().getRow() - TOP_LEFT_CORNER.getRow();
   }
 }

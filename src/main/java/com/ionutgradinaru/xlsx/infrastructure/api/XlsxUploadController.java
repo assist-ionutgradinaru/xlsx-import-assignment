@@ -17,7 +17,10 @@ public class XlsxUploadController {
   final UploadService uploadService;
 
   @Autowired
-  public XlsxUploadController(final UploadService uploadService) {
+  public XlsxUploadController(final XlsxBookingService xlsxBookingService,
+                              final UploadService uploadService) {
+
+    this.xlsxBookingService = xlsxBookingService;
     this.uploadService = uploadService;
   }
 

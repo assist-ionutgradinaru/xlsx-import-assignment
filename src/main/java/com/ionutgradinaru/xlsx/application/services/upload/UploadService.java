@@ -1,8 +1,10 @@
 package com.ionutgradinaru.xlsx.application.services.upload;
 
-import org.springframework.web.multipart.MultipartFile;
+import com.ionutgradinaru.xlsx.domain_model.BookingTransaction;
+
+import java.util.List;
 
 public interface UploadService {
 
-  void upload(final MultipartFile file, final String range, final String worksheetName);
+  int upload(final List<BookingTransaction> bookingTransactions);
 }
