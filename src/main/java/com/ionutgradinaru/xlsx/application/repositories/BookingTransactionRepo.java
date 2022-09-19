@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022.
+ * Ionut Gradinaru
+ * All rights reserved
+ */
+
 package com.ionutgradinaru.xlsx.application.repositories;
 
 import com.ionutgradinaru.xlsx.domain_model.BookingTransaction;

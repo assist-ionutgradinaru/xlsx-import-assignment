@@ -1,13 +1,19 @@
-package com.ionutgradinaru.xlsx.common.utils;
+/*
+ * Copyright (c) 2022.
+ * Ionut Gradinaru
+ * All rights reserved
+ */
 
-import com.ionutgradinaru.xlsx.common.exceptions.InvalidRangeArgumentException;
+package com.ionutgradinaru.xlsx.utils;
+
+import com.ionutgradinaru.xlsx.infrastructure.exceptions.InvalidRangeArgumentException;
 import org.apache.poi.ss.util.CellAddress;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.ionutgradinaru.xlsx.common.utils.XlsxHelper.TOP_LEFT_CORNER;
-import static com.ionutgradinaru.xlsx.common.utils.XlsxHelper.TOP_RIGHT_CORNER;
+import static com.ionutgradinaru.xlsx.utils.XlsxHelper.TOP_LEFT_CORNER;
+import static com.ionutgradinaru.xlsx.utils.XlsxHelper.TOP_RIGHT_CORNER;
 
 interface XlsxRangeValidator extends Consumer<List<String>> {
 

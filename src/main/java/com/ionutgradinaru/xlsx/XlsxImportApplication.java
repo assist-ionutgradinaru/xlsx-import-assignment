@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022.
+ * Ionut Gradinaru
+ * All rights reserved
+ */
+
 package com.ionutgradinaru.xlsx;
 
 import org.springframework.boot.SpringApplication;

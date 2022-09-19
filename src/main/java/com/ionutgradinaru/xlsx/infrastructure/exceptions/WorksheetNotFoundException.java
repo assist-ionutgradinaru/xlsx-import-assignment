@@ -1,4 +1,10 @@
-package com.ionutgradinaru.xlsx.common.exceptions;
+/*
+ * Copyright (c) 2022.
+ * Ionut Gradinaru
+ * All rights reserved
+ */
+
+package com.ionutgradinaru.xlsx.infrastructure.exceptions;
 
 public class WorksheetNotFoundException extends RuntimeException {
 

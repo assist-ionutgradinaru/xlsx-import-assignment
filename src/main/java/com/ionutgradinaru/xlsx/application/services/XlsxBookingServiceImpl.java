@@ -1,17 +1,26 @@
+/*
+ * Copyright (c) 2022.
+ * Ionut Gradinaru
+ * All rights reserved
+ */
+
 package com.ionutgradinaru.xlsx.application.services;
 
-import com.ionutgradinaru.xlsx.common.utils.XlsxDataRange;
-import com.ionutgradinaru.xlsx.common.utils.XlsxHelper;
+import com.ionutgradinaru.xlsx.utils.XlsxDataRange;
+import com.ionutgradinaru.xlsx.utils.XlsxHelper;
 import com.ionutgradinaru.xlsx.domain_model.*;
+import com.poiji.annotation.ExcelCellName;
 import com.poiji.bind.Poiji;
 import com.poiji.exception.PoijiExcelType;
 import com.poiji.option.PoijiOptions;
+import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
@@ -81,4 +90,29 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
           .product(Product.getFromString(dto.getProduct()))
           .renewable(Boolean.valueOf(dto.getRenewable().toLowerCase()))
           .build();
+}
+
+@Data
+class XlsxTransactionDto {
+
+  @ExcelCellName("CustomerName")
+  String customerName;
+  @ExcelCellName("BookingDate")
+  Date bookingDate;
+  @ExcelCellName("OpportunityID")
+  String opportunityId;
+  @ExcelCellName("BookingType")
+  String bookingType;
+  @ExcelCellName("Total")
+  String total;
+  @ExcelCellName("AccountExecutive")
+  String accountExecutive;
+  @ExcelCellName("SalesOrganization")
+  String saleOrganization;
+  @ExcelCellName("Team")
+  String team;
+  @ExcelCellName("Product")
+  String product;
+  @ExcelCellName("Renewable")
+  String renewable;
 }

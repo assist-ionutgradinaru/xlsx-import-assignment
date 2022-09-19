@@ -1,4 +1,10 @@
-package com.ionutgradinaru.xlsx.common.utils;
+/*
+ * Copyright (c) 2022.
+ * Ionut Gradinaru
+ * All rights reserved
+ */
+
+package com.ionutgradinaru.xlsx.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
