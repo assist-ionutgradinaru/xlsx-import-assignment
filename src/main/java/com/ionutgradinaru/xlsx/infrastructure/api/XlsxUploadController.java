@@ -31,11 +31,7 @@ public class XlsxUploadController {
                      @RequestParam("range") String range,
                      @RequestParam("worksheet") String worksheet) {
 
-    var list = xlsxBookingService.fromRange(file,range, worksheet);
-    uploadService.upload(list);
-//    CompletableFuture
-//        .supplyAsync(() -> xlsxBookingService.fromRange(file,range, worksheet))
-//        .thenApply(transactions -> uploadService.upload(transactions).subscribe())
-//        .thenAccept(System.out::println);
+    var bookingTransactions = xlsxBookingService.fromRange(file, range, worksheet);
+    uploadService.upload(bookingTransactions);
   }
 }

@@ -22,19 +22,11 @@ public class UploadServiceImpl implements UploadService {
   @SneakyThrows
   @Override
   public void upload(final List<BookingTransaction> bookingTransactions) {
-    var ids = bookingTransactionRepo.getOpportunityIds();
-    var reduceDuplicates = bookingTransactions.stream()
-        .filter(transaction -> !ids.contains(transaction.getOpportunityId()))
+    var existingIds = bookingTransactionRepo.getOpportunityIds();
+    var exceptDuplicates = bookingTransactions.stream()
+        .filter(transaction -> !existingIds.contains(transaction.getOpportunityId()))
         .collect(Collectors.toList());
-    bookingTransactionRepo.saveAll(reduceDuplicates);
-    //    CompletableFuture
-    //        .supplyAsync(bookingTransactionRepo::getOpportunityIds)
-    //        .thenApply(ids -> bookingTransactions.stream()
-    //            .filter(transaction -> !ids.contains(transaction.getOpportunityId()))
-    //            .collect(Collectors.toList()))
-    //        .thenAccept(bookingTransactionRepo::saveAll)
-    //        .exceptionally(ex -> {
-    //          throw new RuntimeException(ex);
-    //        });
+
+    bookingTransactionRepo.saveAll(exceptDuplicates);
   }
 }
