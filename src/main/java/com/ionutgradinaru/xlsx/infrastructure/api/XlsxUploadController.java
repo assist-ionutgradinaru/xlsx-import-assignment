@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @RequestMapping("/api/v1/upload")
 public class XlsxUploadController {
@@ -25,7 +27,13 @@ public class XlsxUploadController {
   }
 
   @PostMapping()
-  public void upload(@RequestParam("file") MultipartFile file) {
-    uploadService.upload(file, "range", "worksheetName");
+  public void upload(@RequestParam("file") MultipartFile file,
+                     @RequestParam("range") String range,
+                     @RequestParam("worksheet") String worksheet) {
+
+    CompletableFuture
+        .supplyAsync(() -> xlsxBookingService.fromRange(file,range, worksheet))
+        .thenApply(uploadService::upload)
+        .thenAccept(System.out::println);
   }
 }
