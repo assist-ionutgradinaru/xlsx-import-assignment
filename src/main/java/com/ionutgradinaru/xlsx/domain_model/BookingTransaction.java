@@ -13,24 +13,37 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "booking_transaction")
 public class BookingTransaction {
 
   @Id
-  @Column(name = "id", nullable = false)
+  @Column(name = "id", nullable = false, unique = true)
   Long id;
+
   @Column(name = "customer_name")
   String customerName;
+
+  @Column(name = "booking_date")
   Date bookingDate;
+
   @Column(name = "opportunity_id", unique = true)
   String opportunityId;
+
+  @Column(name = "booking_type")
   @Enumerated(EnumType.STRING)
   BookingType bookingType;
   Double total;
+
+  @Column(name = "account_executive")
   String accountExecutive;
+
+  @Column(name = "sale_organization")
   @Enumerated(EnumType.STRING)
   SaleOrganization saleOrganization;
+
   @Enumerated(EnumType.STRING)
   Team team;
+
   @Enumerated(EnumType.STRING)
   Product product;
   Boolean renewable;

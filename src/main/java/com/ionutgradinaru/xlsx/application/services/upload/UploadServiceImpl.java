@@ -5,7 +5,7 @@ import com.ionutgradinaru.xlsx.domain_model.BookingTransaction;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -21,9 +21,7 @@ public class UploadServiceImpl implements UploadService {
 
   @SneakyThrows
   @Override
-  public Mono<Long> upload(final List<BookingTransaction> bookingTransactions) {
-    return bookingTransactionRepo
-        .saveAll(bookingTransactions)
-        .count();
+  public Flux<BookingTransaction> upload(final List<BookingTransaction> bookingTransactions) {
+    return bookingTransactionRepo.saveAll(bookingTransactions);
   }
 }
