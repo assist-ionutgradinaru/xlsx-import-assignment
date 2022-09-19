@@ -16,7 +16,7 @@ public class XlsxHelper {
     // empty on purpose; to unsure that nobody will create an instance of this class
   }
 
-  public static XlsxDataRange from(final String range) {
+  public static XlsxDataRange getDataRange(final String range) {
     var bounds = Arrays.stream(range.split(":")).collect(Collectors.toList());
     XlsxRangeValidator.validate().accept(bounds);
 

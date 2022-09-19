@@ -24,7 +24,7 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
   @SneakyThrows
   @Override
   public List<BookingTransaction> fromRange(final MultipartFile file, final String range, final String worksheetName) {
-    var xlsxRange = XlsxHelper.from(range);
+    var xlsxRange = XlsxHelper.getDataRange(range);
     var xlsxOptions = getXlsxOptions(worksheetName, xlsxRange);
 
     return Poiji.fromExcel(
@@ -38,18 +38,24 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
   }
 
   private PoijiOptions getXlsxOptions(final String worksheet, final XlsxDataRange xlsxRange) {
-    var skipRows = XlsxHelper.skipRows(xlsxRange);
-    var limitRows = XlsxHelper.limitRows(xlsxRange);
-
-    return PoijiOptions.PoijiOptionsBuilder
+    var options = PoijiOptions.PoijiOptionsBuilder
         .settings()
         .sheetName(worksheet)
         .headerStart(XlsxHelper.HEADER_INDEX_START)
-        .skip(skipRows)
-        .limit(limitRows)
         .datePattern(XlsxHelper.DATE_FORMAT)
-        .disableXLSXNumberCellFormat()
-        .build();
+        .disableXLSXNumberCellFormat();
+
+    var skipRows = XlsxHelper.skipRows(xlsxRange);
+    if (skipRows > 0) {
+      options.skip(skipRows);
+    }
+
+    var limitRows = XlsxHelper.limitRows(xlsxRange);
+    if (limitRows > 0) {
+      options.limit(limitRows);
+    }
+
+    return options.build();
   }
 
   private static final ToDoubleFunction<String> convertStringToDouble = str -> {
@@ -67,12 +73,12 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
           .customerName(dto.getCustomerName())
           .bookingDate(dto.getBookingDate())
           .opportunityId(dto.getOpportunityId())
-          .bookingType(BookingType.valueOf(dto.getBookingType()))
+          .bookingType(BookingType.getFromString(dto.getBookingType()))
           .total(convertStringToDouble.applyAsDouble(dto.getTotal()))
           .accountExecutive(dto.getAccountExecutive())
-          .saleOrganization(SaleOrganization.valueOf(dto.getSaleOrganization()))
-          .team(Team.valueOf(dto.getTeam()))
-          .product(Product.valueOf(dto.getProduct()))
-          .renewable(Boolean.valueOf(dto.getRenewable()))
+          .saleOrganization(SaleOrganization.getFromString(dto.getSaleOrganization()))
+          .team(Team.getFromString(dto.getTeam()))
+          .product(Product.getFromString(dto.getProduct()))
+          .renewable(Boolean.valueOf(dto.getRenewable().toLowerCase()))
           .build();
 }

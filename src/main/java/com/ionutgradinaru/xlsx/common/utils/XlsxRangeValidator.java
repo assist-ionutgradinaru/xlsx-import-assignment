@@ -32,7 +32,7 @@ interface XlsxRangeValidator extends Consumer<List<String>> {
 
       if (start.getRow() < TOP_LEFT_CORNER.getRow()) {
         throw new InvalidRangeArgumentException("The start row is out of range.");
-      } else if (start.getColumn() < TOP_LEFT_CORNER.getRow()) {
+      } else if (start.getColumn() < TOP_LEFT_CORNER.getColumn()) {
         throw new InvalidRangeArgumentException("The start column is out of range.");
       } else if (end.getColumn() > TOP_RIGHT_CORNER.getColumn()) {
         throw new InvalidRangeArgumentException("The end column is out of range.");
