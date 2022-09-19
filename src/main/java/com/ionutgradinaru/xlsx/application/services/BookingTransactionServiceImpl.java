@@ -7,8 +7,9 @@
 package com.ionutgradinaru.xlsx.application.services;
 
 import com.ionutgradinaru.xlsx.application.repositories.BookingTransactionRepo;
+import com.ionutgradinaru.xlsx.application.repositories.BookingTransactionSpecification;
 import com.ionutgradinaru.xlsx.domain_model.BookingTransaction;
-import com.ionutgradinaru.xlsx.infrastructure.api.BookingTransactionFilter;
+import com.ionutgradinaru.xlsx.infrastructure.api.dto.BookingTransactionFilterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class BookingTransactionServiceImpl implements BookingTransactionService 
   }
 
   @Override
-  public void upload(final List<BookingTransaction> bookingTransactions) {
+  public void saveAll(final List<BookingTransaction> bookingTransactions) {
     CompletableFuture
         .supplyAsync(bookingTransactionRepo::getOpportunityIds)
         .thenApply(existingIds -> bookingTransactions.stream()
@@ -37,7 +38,8 @@ public class BookingTransactionServiceImpl implements BookingTransactionService 
   }
 
   @Override
-  public List<BookingTransaction> findAll(BookingTransactionFilter filters) {
-    return null;
+  public List<BookingTransaction> findAll(BookingTransactionFilterDto filters) {
+    var specification = BookingTransactionSpecification.getTransactions(filters);
+    return bookingTransactionRepo.findAll(specification);
   }
 }

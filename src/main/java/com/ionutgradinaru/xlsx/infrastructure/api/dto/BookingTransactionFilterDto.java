@@ -4,7 +4,7 @@
  * All rights reserved
  */
 
-package com.ionutgradinaru.xlsx.infrastructure.api;
+package com.ionutgradinaru.xlsx.infrastructure.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ionutgradinaru.xlsx.domain_model.BookingType;
@@ -14,18 +14,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookingTransactionFilter {
+public class BookingTransactionFilterDto {
 
   private Team team;
   private Product product;
   private BookingType bookingType;
   @JsonFormat(pattern = "dd/MM/yyyy")
-  private Date startDate;
+  private LocalDate startDate;
   @JsonFormat(pattern = "dd/MM/yyyy")
-  private Date endDate;
+  private LocalDate endDate;
 }

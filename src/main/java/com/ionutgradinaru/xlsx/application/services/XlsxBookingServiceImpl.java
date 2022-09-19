@@ -6,9 +6,9 @@
 
 package com.ionutgradinaru.xlsx.application.services;
 
+import com.ionutgradinaru.xlsx.domain_model.*;
 import com.ionutgradinaru.xlsx.utils.XlsxDataRange;
 import com.ionutgradinaru.xlsx.utils.XlsxHelper;
-import com.ionutgradinaru.xlsx.domain_model.*;
 import com.poiji.annotation.ExcelCellName;
 import com.poiji.bind.Poiji;
 import com.poiji.exception.PoijiExcelType;
@@ -20,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
@@ -50,9 +52,7 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
     var options = PoijiOptions.PoijiOptionsBuilder
         .settings()
         .sheetName(worksheet)
-        .headerStart(XlsxHelper.HEADER_INDEX_START)
-        .datePattern(XlsxHelper.DATE_FORMAT)
-        .disableXLSXNumberCellFormat();
+        .headerStart(XlsxHelper.HEADER_INDEX_START);
 
     var skipRows = XlsxHelper.skipRows(xlsxRange);
     if (skipRows > 0) {
@@ -80,7 +80,7 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
   private static final Function<XlsxTransactionDto, BookingTransaction> convertToBookingTransaction =
       dto -> BookingTransaction.builder()
           .customerName(dto.getCustomerName())
-          .bookingDate(dto.getBookingDate())
+          .bookingDate(LocalDate.parse(dto.bookingDate, DateTimeFormatter.ofPattern(XlsxHelper.DATE_FORMAT)))
           .opportunityId(dto.getOpportunityId())
           .bookingType(BookingType.getFromString(dto.getBookingType()))
           .total(convertStringToDouble.applyAsDouble(dto.getTotal()))
@@ -88,7 +88,7 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
           .saleOrganization(SaleOrganization.getFromString(dto.getSaleOrganization()))
           .team(Team.getFromString(dto.getTeam()))
           .product(Product.getFromString(dto.getProduct()))
-          .renewable(Boolean.valueOf(dto.getRenewable().toLowerCase()))
+          .renewable(Objects.equals("YES",dto.getRenewable()) ? Boolean.TRUE : Boolean.FALSE)
           .build();
 }
 
@@ -98,7 +98,7 @@ class XlsxTransactionDto {
   @ExcelCellName("CustomerName")
   String customerName;
   @ExcelCellName("BookingDate")
-  Date bookingDate;
+  String bookingDate;
   @ExcelCellName("OpportunityID")
   String opportunityId;
   @ExcelCellName("BookingType")

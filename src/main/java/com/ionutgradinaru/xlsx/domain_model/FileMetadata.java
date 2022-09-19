@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -32,9 +32,9 @@ public class FileMetadata {
 
   @Column(name = "creation_date")
   @CreationTimestamp
-  private Date creationDate;
+  private LocalDate creationDate;
 
   @Column(name = "upload_date")
   @CreationTimestamp
-  private Date uploadDate;
+  private LocalDate uploadDate;
 }

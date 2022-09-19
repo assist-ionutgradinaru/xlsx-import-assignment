@@ -4,7 +4,7 @@
  * All rights reserved
  */
 
-package com.ionutgradinaru.xlsx.infrastructure.api;
+package com.ionutgradinaru.xlsx.infrastructure.api.dto;
 
 import lombok.Builder;
 import lombok.Data;

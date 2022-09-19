@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -31,7 +31,7 @@ public class BookingTransaction {
   String customerName;
 
   @Column(name = "booking_date")
-  Date bookingDate;
+  LocalDate bookingDate;
 
   @Column(name = "opportunity_id", unique = true)
   String opportunityId;
