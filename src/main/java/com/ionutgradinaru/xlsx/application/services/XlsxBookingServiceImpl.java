@@ -18,15 +18,9 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,28 +61,18 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
     return options.build();
   }
 
-  private static final ToDoubleFunction<String> convertStringToDouble = str -> {
-    try {
-      return NumberFormat.getCurrencyInstance(Locale.US)
-          .parse(str)
-          .doubleValue();
-    } catch (ParseException e) {
-      throw new NumberFormatException(e.getMessage());
-    }
-  };
-
   private static final Function<XlsxTransactionDto, BookingTransaction> convertToBookingTransaction =
       dto -> BookingTransaction.builder()
           .customerName(dto.getCustomerName())
-          .bookingDate(LocalDate.parse(dto.bookingDate, DateTimeFormatter.ofPattern(XlsxHelper.DATE_FORMAT)))
+          .bookingDate(XlsxHelper.convertStringToDate.apply(dto.bookingDate))
           .opportunityId(dto.getOpportunityId())
           .bookingType(BookingType.getFromString(dto.getBookingType()))
-          .total(convertStringToDouble.applyAsDouble(dto.getTotal()))
+          .total(XlsxHelper.convertCurrencyStringToDouble.applyAsDouble(dto.getTotal()))
           .accountExecutive(dto.getAccountExecutive())
           .saleOrganization(SaleOrganization.getFromString(dto.getSaleOrganization()))
           .team(Team.getFromString(dto.getTeam()))
           .product(Product.getFromString(dto.getProduct()))
-          .renewable(Objects.equals("YES",dto.getRenewable()) ? Boolean.TRUE : Boolean.FALSE)
+          .renewable(Objects.equals("YES", dto.getRenewable()) ? Boolean.TRUE : Boolean.FALSE)
           .build();
 }
 

@@ -9,8 +9,8 @@ package com.ionutgradinaru.xlsx.infrastructure.api;
 import com.ionutgradinaru.xlsx.application.services.BookingTransactionService;
 import com.ionutgradinaru.xlsx.application.services.FileMetadataService;
 import com.ionutgradinaru.xlsx.application.services.XlsxBookingService;
-import com.ionutgradinaru.xlsx.domain_model.BookingTransaction;
 import com.ionutgradinaru.xlsx.domain_model.FileMetadata;
+import com.ionutgradinaru.xlsx.infrastructure.api.dto.BookingTransactionDto;
 import com.ionutgradinaru.xlsx.infrastructure.api.dto.BookingTransactionFilterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -55,8 +56,13 @@ public class XlsxController {
   }
 
   @GetMapping("/opportunity")
-  public CompletableFuture<List<BookingTransaction>> findAll(final BookingTransactionFilterDto filters) {
+  public CompletableFuture<List<BookingTransactionDto>> findAll(final BookingTransactionFilterDto filters) {
     return CompletableFuture
-        .supplyAsync(() -> bookingTransactionService.findAll(filters));
+        .supplyAsync(() -> bookingTransactionService
+            .findAll(filters)
+            .stream()
+            .map(BookingTransactionDto::of)
+            .collect(Collectors.toList())
+        );
   }
 }
