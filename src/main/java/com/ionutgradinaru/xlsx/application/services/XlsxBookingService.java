@@ -1,4 +1,4 @@
-package com.ionutgradinaru.xlsx.application.services.upload;
+package com.ionutgradinaru.xlsx.application.services;
 
 import com.ionutgradinaru.xlsx.domain_model.BookingTransaction;
 import org.springframework.web.multipart.MultipartFile;

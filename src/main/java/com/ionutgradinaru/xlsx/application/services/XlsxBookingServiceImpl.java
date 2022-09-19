@@ -1,4 +1,4 @@
-package com.ionutgradinaru.xlsx.application.services.upload;
+package com.ionutgradinaru.xlsx.application.services;
 
 import com.ionutgradinaru.xlsx.common.utils.XlsxDataRange;
 import com.ionutgradinaru.xlsx.common.utils.XlsxHelper;

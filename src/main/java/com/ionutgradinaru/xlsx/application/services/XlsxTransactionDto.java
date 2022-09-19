@@ -1,4 +1,4 @@
-package com.ionutgradinaru.xlsx.application.services.upload;
+package com.ionutgradinaru.xlsx.application.services;
 
 import com.poiji.annotation.ExcelCellName;
 import lombok.Data;
