@@ -69,6 +69,5 @@ The Postman collections can be found inside of ```postman_collections``` folder.
 
 # 5. Code design diagram
 ***
-
-
+![](diagrams/xlsx_upload.drawio.png)
   

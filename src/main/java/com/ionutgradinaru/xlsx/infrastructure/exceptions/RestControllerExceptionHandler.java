@@ -7,20 +7,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class RestControllerExceptionHandler {
 
-  @ExceptionHandler(FileCannotBeOpenedException.class)
-  ResponseEntity<String> fileCannotBeOpened(FileCannotBeOpenedException ex) {
-    return ResponseEntity
-        .internalServerError()
-        .body(ex.getMessage());
-  }
-
-  @ExceptionHandler(WorksheetNotFoundException.class)
-  ResponseEntity<String> worksheetNotFound(WorksheetNotFoundException ex) {
-    return ResponseEntity
-        .badRequest()
-        .body(ex.getMessage());
-  }
-
   @ExceptionHandler(InvalidRangeArgumentException.class)
   ResponseEntity<String> invalidRange(InvalidRangeArgumentException ex) {
     return ResponseEntity
