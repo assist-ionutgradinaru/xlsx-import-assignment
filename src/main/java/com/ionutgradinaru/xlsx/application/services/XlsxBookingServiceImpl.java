@@ -16,8 +16,8 @@ import com.poiji.option.PoijiOptions;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -28,12 +28,15 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
 
   @SneakyThrows
   @Override
-  public List<BookingTransaction> fromRange(final MultipartFile file, final String range, final String worksheetName) {
-    var xlsxRange = XlsxHelper.getDataRange(range);
+  public List<BookingTransaction> fromRange(final InputStream inputStream,
+                                            final String range,
+                                            final String worksheetName) {
+
+    var xlsxRange = XlsxHelper.getDataRange.apply(range);
     var xlsxOptions = getXlsxOptions(worksheetName, xlsxRange);
 
     return Poiji.fromExcel(
-            file.getInputStream(),
+            inputStream,
             PoijiExcelType.XLSX,
             XlsxTransactionDto.class,
             xlsxOptions
@@ -48,12 +51,12 @@ public class XlsxBookingServiceImpl implements XlsxBookingService {
         .sheetName(worksheet)
         .headerStart(XlsxHelper.HEADER_INDEX_START);
 
-    var skipRows = XlsxHelper.skipRows(xlsxRange);
+    var skipRows = XlsxHelper.skipRows.applyAsInt(xlsxRange);
     if (skipRows > 0) {
       options.skip(skipRows);
     }
 
-    var limitRows = XlsxHelper.limitRows(xlsxRange);
+    var limitRows = XlsxHelper.limitRows.applyAsInt(xlsxRange);
     if (limitRows > 0) {
       options.limit(limitRows);
     }

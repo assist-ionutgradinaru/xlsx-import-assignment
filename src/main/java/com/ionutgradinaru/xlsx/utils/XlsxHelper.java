@@ -15,10 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.DoubleFunction;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 public class XlsxHelper {
@@ -35,27 +32,25 @@ public class XlsxHelper {
     // empty on purpose; to unsure that nobody will create an instance of this class
   }
 
-  public static XlsxDataRange getDataRange(final String range) {
+  public static final Function<String, XlsxDataRange> getDataRange = range -> {
     var bounds = Arrays.stream(range.split(":")).collect(Collectors.toList());
     return new XlsxDataRange(
         new CellAddress(bounds.get(0)),
         new CellAddress(bounds.get(1))
     );
-  }
+  };
 
-  public static int skipRows(final XlsxDataRange range) {
-    return range.getStartCellAddress().getRow() - TOP_LEFT_CORNER.getRow();
-  }
+  public static final ToIntFunction<XlsxDataRange> skipRows = range ->
+      range.getStartCellAddress().getRow() - TOP_LEFT_CORNER.getRow();
 
-  public static int limitRows(final XlsxDataRange range) {
-    return range.getEndCellAddress().getRow() - TOP_LEFT_CORNER.getRow();
-  }
+  public static final ToIntFunction<XlsxDataRange> limitRows = range ->
+      range.getEndCellAddress().getRow() - TOP_LEFT_CORNER.getRow();
 
-  public static void validateFileType(final String file) {
-    if (!Objects.equals(file, EXCEL_CONTENT_TYPE)) {
+  public static final Consumer<String> validateFileType = contentType -> {
+    if (!Objects.equals(contentType, EXCEL_CONTENT_TYPE)) {
       throw new IllegalArgumentException("The given file doesn't have the XLSX format.");
     }
-  }
+  };
 
   public static final Consumer<String> validateRangeString = str -> {
     var bounds = Arrays.stream(str.split(":")).collect(Collectors.toList());

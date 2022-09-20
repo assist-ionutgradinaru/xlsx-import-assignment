@@ -6,14 +6,12 @@
 
 package com.ionutgradinaru.xlsx.utils;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Value;
 import org.apache.poi.ss.util.CellAddress;
 
-@Getter
-@AllArgsConstructor
+@Value
 public class XlsxDataRange {
 
-  private final CellAddress startCellAddress;
-  private final CellAddress endCellAddress;
+  CellAddress startCellAddress;
+  CellAddress endCellAddress;
 }

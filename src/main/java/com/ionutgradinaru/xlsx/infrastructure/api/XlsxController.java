@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,14 +42,14 @@ public class XlsxController {
   @PostMapping(value = "/upload")
   public void upload(@RequestParam("file") MultipartFile file,
                      @RequestParam("range") String range,
-                     @RequestParam("worksheet") String worksheet) {
+                     @RequestParam("worksheet") String worksheet) throws IOException {
 
     // Validate parameters
-    XlsxHelper.validateFileType(file.getContentType());
+    XlsxHelper.validateFileType.accept(file.getContentType());
     XlsxHelper.validateRangeString.accept(range);
 
     // Transform from Excel data to BookingTransactions and save them to DB
-    var bookingTransactions = xlsxBookingService.fromRange(file, range, worksheet);
+    var bookingTransactions = xlsxBookingService.fromRange(file.getInputStream(), range, worksheet);
     bookingTransactionService.saveAll(bookingTransactions);
 
     // Save the filemetada
