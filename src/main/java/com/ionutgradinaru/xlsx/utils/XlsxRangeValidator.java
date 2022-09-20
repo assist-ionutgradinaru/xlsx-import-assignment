@@ -11,6 +11,7 @@ import org.apache.poi.ss.util.CellAddress;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 import static com.ionutgradinaru.xlsx.utils.XlsxHelper.TOP_LEFT_CORNER;
 import static com.ionutgradinaru.xlsx.utils.XlsxHelper.TOP_RIGHT_CORNER;
@@ -25,6 +26,11 @@ interface XlsxRangeValidator extends Consumer<List<String>> {
 
   private static XlsxRangeValidator isRangeFormatValid() {
     return list -> {
+      Pattern pattern = Pattern.compile("\\b[A-Z]\\d+:[A-Z]\\d+\\b");
+      if (!pattern.matcher(String.join("", list)).matches()) {
+        throw new InvalidRangeArgumentException("The range is invalid.");
+      }
+
       if (list.size() != 2) {
         throw new InvalidRangeArgumentException("The range is invalid.");
       }

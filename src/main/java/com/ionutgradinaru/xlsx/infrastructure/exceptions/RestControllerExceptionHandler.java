@@ -20,4 +20,18 @@ public class RestControllerExceptionHandler {
         .badRequest()
         .body(ex.getMessage());
   }
+
+  @ExceptionHandler(InvalidRangeArgumentException.class)
+  ResponseEntity<String> invalidRange(InvalidRangeArgumentException ex) {
+    return ResponseEntity
+        .badRequest()
+        .body(ex.getMessage());
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  ResponseEntity<String> illegalArgument(IllegalArgumentException ex) {
+    return ResponseEntity
+        .badRequest()
+        .body(ex.getMessage());
+  }
 }

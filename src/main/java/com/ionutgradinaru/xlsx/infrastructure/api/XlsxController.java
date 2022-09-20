@@ -45,14 +45,14 @@ public class XlsxController {
                                         @RequestParam("worksheet") String worksheet) {
 
     return CompletableFuture
-        .runAsync(() -> XlsxHelper.validateFileType(file.getContentType()))
+        .runAsync(() -> {
+          XlsxHelper.validateFileType(file.getContentType());
+          XlsxHelper.validateRangeString.accept(range);
+        })
         .thenApply(unused -> xlsxBookingService.fromRange(file, range, worksheet))
         .thenAccept(bookingTransactionService::saveAll)
         .thenAccept(unused -> {
-          var fileMedata = FileMetadata.builder()
-              .name(worksheet)
-              .size(file.getSize())
-              .build();
+          var fileMedata = FileMetadata.builder().name(worksheet).size(file.getSize()).build();
           fileMetadataService.save(fileMedata);
         });
   }

@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class XlsxHelper {
 
-  public static String EXCEL_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  public static final String EXCEL_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   public static final int HEADER_INDEX_START = 2;
   public static final String DATE_FORMAT = "dd/MM/yyyy";
   public static final Locale LOCALE = Locale.US;
@@ -36,8 +37,6 @@ public class XlsxHelper {
 
   public static XlsxDataRange getDataRange(final String range) {
     var bounds = Arrays.stream(range.split(":")).collect(Collectors.toList());
-    XlsxRangeValidator.validate().accept(bounds);
-
     return new XlsxDataRange(
         new CellAddress(bounds.get(0)),
         new CellAddress(bounds.get(1))
@@ -57,6 +56,11 @@ public class XlsxHelper {
       throw new IllegalArgumentException("The given file doesn't have the XLSX format.");
     }
   }
+
+  public static final Consumer<String> validateRangeString = str -> {
+    var bounds = Arrays.stream(str.split(":")).collect(Collectors.toList());
+    XlsxRangeValidator.validate().accept(bounds);
+  };
 
   public static final ToDoubleFunction<String> convertCurrencyStringToDouble = str -> {
     try {
