@@ -10,11 +10,13 @@ import com.ionutgradinaru.xlsx.domain_model.BookingTransaction;
 import com.ionutgradinaru.xlsx.utils.XlsxHelper;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 
 @Data
 @Builder
+@EqualsAndHashCode
 public class BookingTransactionDto {
 
   String customerName;
