@@ -8,13 +8,13 @@ package com.ionutgradinaru.xlsx.utils;
 
 import org.apache.poi.ss.util.CellAddress;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.function.DoubleFunction;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
@@ -22,9 +22,11 @@ import java.util.stream.Collectors;
 
 public class XlsxHelper {
 
+  public static String EXCEL_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   public static final int HEADER_INDEX_START = 2;
   public static final String DATE_FORMAT = "dd/MM/yyyy";
   public static final Locale LOCALE = Locale.US;
+
   public static final CellAddress TOP_LEFT_CORNER = new CellAddress("A3");
   public static final CellAddress TOP_RIGHT_CORNER = new CellAddress("K3");
 
@@ -48,6 +50,12 @@ public class XlsxHelper {
 
   public static int limitRows(final XlsxDataRange range) {
     return range.getEndCellAddress().getRow() - TOP_LEFT_CORNER.getRow();
+  }
+
+  public static void validateFileType(final String file) {
+    if (!Objects.equals(file, EXCEL_CONTENT_TYPE)) {
+      throw new IllegalArgumentException("The given file doesn't have the XLSX format.");
+    }
   }
 
   public static final ToDoubleFunction<String> convertCurrencyStringToDouble = str -> {

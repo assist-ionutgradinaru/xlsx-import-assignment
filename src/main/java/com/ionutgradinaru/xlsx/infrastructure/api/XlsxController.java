@@ -12,6 +12,7 @@ import com.ionutgradinaru.xlsx.application.services.XlsxBookingService;
 import com.ionutgradinaru.xlsx.domain_model.FileMetadata;
 import com.ionutgradinaru.xlsx.infrastructure.api.dto.BookingTransactionDto;
 import com.ionutgradinaru.xlsx.infrastructure.api.dto.BookingTransactionFilterDto;
+import com.ionutgradinaru.xlsx.utils.XlsxHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,13 +39,14 @@ public class XlsxController {
     this.fileMetadataService = fileMetadataService;
   }
 
-  @PostMapping("/upload")
+  @PostMapping(value = "/upload")
   public CompletableFuture<Void> upload(@RequestParam("file") MultipartFile file,
                                         @RequestParam("range") String range,
                                         @RequestParam("worksheet") String worksheet) {
 
     return CompletableFuture
-        .supplyAsync(() -> xlsxBookingService.fromRange(file, range, worksheet))
+        .runAsync(() -> XlsxHelper.validateFileType(file.getContentType()))
+        .thenApply(unused -> xlsxBookingService.fromRange(file, range, worksheet))
         .thenAccept(bookingTransactionService::saveAll)
         .thenAccept(unused -> {
           var fileMedata = FileMetadata.builder()
