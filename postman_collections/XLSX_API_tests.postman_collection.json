@@ -1,0 +1,680 @@
+{
+	"info": {
+		"_postman_id": "53919c67-ec7a-4bbe-9df4-b6b0564e5078",
+		"name": "XLSX API tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "Upload with all valid parameters",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"contentType": "",
+									"type": "file",
+									"src": "/Users/ionutgradinaru/Downloads/MOCK_DATA_47.xlsx"
+								},
+								{
+									"key": "range",
+									"value": "A3:K50",
+									"type": "default"
+								},
+								{
+									"key": "worksheet",
+									"value": "MOCK_DATA_47",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/api/v1/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload with invalid file parameter",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"contentType": "",
+									"type": "file",
+									"src": "/Users/ionutgradinaru/Downloads/Ionut Gradinaru - CV.pdf"
+								},
+								{
+									"key": "range",
+									"value": "A3:K50",
+									"type": "default"
+								},
+								{
+									"key": "worksheet",
+									"value": "MOCK_DATA_47",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/api/v1/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload with invalid range parameter",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"contentType": "",
+									"type": "file",
+									"src": "/Users/ionutgradinaru/Downloads/MOCK_DATA_47.xlsx"
+								},
+								{
+									"key": "range",
+									"value": "A1:L50",
+									"type": "default"
+								},
+								{
+									"key": "worksheet",
+									"value": "MOCK_DATA_47",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/api/v1/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload without file parameter",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"contentType": "",
+									"type": "file",
+									"src": "/Users/ionutgradinaru/Downloads/MOCK_DATA_47.xlsx",
+									"disabled": true
+								},
+								{
+									"key": "range",
+									"value": "A3:K50",
+									"type": "default"
+								},
+								{
+									"key": "worksheet",
+									"value": "MOCK_DATA_47",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/api/v1/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload without range parameter",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"contentType": "",
+									"type": "file",
+									"src": "/Users/ionutgradinaru/Downloads/MOCK_DATA_47.xlsx"
+								},
+								{
+									"key": "range",
+									"value": "A3:K50",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "worksheet",
+									"value": "MOCK_DATA_47",
+									"type": "default"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/api/v1/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload without worksheet parameter",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"contentType": "",
+									"type": "file",
+									"src": "/Users/ionutgradinaru/Downloads/MOCK_DATA_47.xlsx"
+								},
+								{
+									"key": "range",
+									"value": "A3:K50",
+									"type": "default"
+								},
+								{
+									"key": "worksheet",
+									"value": "MOCK_DATA_47",
+									"type": "default",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/api/v1/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Opportunity",
+			"item": [
+				{
+					"name": "Opportunity with all filters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/opportunity?bookingType=NEW&team=EAST&product=ALLOY&startDate=30/03/2018&endDate=01/01/2019",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"opportunity"
+							],
+							"query": [
+								{
+									"key": "bookingType",
+									"value": "NEW"
+								},
+								{
+									"key": "team",
+									"value": "EAST"
+								},
+								{
+									"key": "product",
+									"value": "ALLOY"
+								},
+								{
+									"key": "startDate",
+									"value": "30/03/2018"
+								},
+								{
+									"key": "endDate",
+									"value": "01/01/2019"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opportunity with booking type filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/opportunity?bookingType=NEW",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"opportunity"
+							],
+							"query": [
+								{
+									"key": "bookingType",
+									"value": "NEW"
+								},
+								{
+									"key": "team",
+									"value": "EAST",
+									"disabled": true
+								},
+								{
+									"key": "product",
+									"value": "ALLOY",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "30/03/2018",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "01/01/2019",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opportunity with team filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/opportunity?team=EAST",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"opportunity"
+							],
+							"query": [
+								{
+									"key": "bookingType",
+									"value": "NEW",
+									"disabled": true
+								},
+								{
+									"key": "team",
+									"value": "EAST"
+								},
+								{
+									"key": "product",
+									"value": "ALLOY",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "30/03/2018",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "01/01/2019",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opportunity with product filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/opportunity?product=ALLOY",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"opportunity"
+							],
+							"query": [
+								{
+									"key": "bookingType",
+									"value": "NEW",
+									"disabled": true
+								},
+								{
+									"key": "team",
+									"value": "EAST",
+									"disabled": true
+								},
+								{
+									"key": "product",
+									"value": "ALLOY"
+								},
+								{
+									"key": "startDate",
+									"value": "30/03/2018",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "01/01/2019",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opportunity with start date filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/opportunity?startDate=30/03/2018",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"opportunity"
+							],
+							"query": [
+								{
+									"key": "bookingType",
+									"value": "NEW",
+									"disabled": true
+								},
+								{
+									"key": "team",
+									"value": "EAST",
+									"disabled": true
+								},
+								{
+									"key": "product",
+									"value": "ALLOY",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "30/03/2018"
+								},
+								{
+									"key": "endDate",
+									"value": "01/01/2019",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opportunity with end date filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/opportunity?endDate=01/01/2019",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"opportunity"
+							],
+							"query": [
+								{
+									"key": "bookingType",
+									"value": "NEW",
+									"disabled": true
+								},
+								{
+									"key": "team",
+									"value": "EAST",
+									"disabled": true
+								},
+								{
+									"key": "product",
+									"value": "ALLOY",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "30/03/2018",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "01/01/2019"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opportunity with invalid start date filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/opportunity?startDate=300-03/2018",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"opportunity"
+							],
+							"query": [
+								{
+									"key": "bookingType",
+									"value": "NEW",
+									"disabled": true
+								},
+								{
+									"key": "team",
+									"value": "EAST",
+									"disabled": true
+								},
+								{
+									"key": "product",
+									"value": "ALLOY",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "300-03/2018"
+								},
+								{
+									"key": "endDate",
+									"value": "01/01/2019",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opportunity with invalid end date filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/opportunity?endDate=300-03/2018",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"opportunity"
+							],
+							"query": [
+								{
+									"key": "bookingType",
+									"value": "NEW",
+									"disabled": true
+								},
+								{
+									"key": "team",
+									"value": "EAST",
+									"disabled": true
+								},
+								{
+									"key": "product",
+									"value": "ALLOY",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "30/03/2018",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "300-03/2018"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
