@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,16 +28,15 @@ public class BookingTransactionServiceImpl implements BookingTransactionService 
 
   @Override
   public void saveAll(final List<BookingTransaction> bookingTransactions) {
-    CompletableFuture
-        .supplyAsync(bookingTransactionRepo::getOpportunityIds)
-        .thenApply(existingIds -> bookingTransactions.stream()
-            .filter(transaction -> !existingIds.contains(transaction.getOpportunityId()))
-            .collect(Collectors.toList()))
-        .thenAccept(bookingTransactionRepo::saveAll);
+    var existingIds = bookingTransactionRepo.getOpportunityIds();
+    var transactionsExceptDuplicates = bookingTransactions.stream()
+        .filter(transaction -> !existingIds.contains(transaction.getOpportunityId()))
+        .collect(Collectors.toList());
+    bookingTransactionRepo.saveAll(transactionsExceptDuplicates);
   }
 
   @Override
-  public List<BookingTransaction> findAll(BookingTransactionFilterDto filters) {
+  public List<BookingTransaction> findAll(final BookingTransactionFilterDto filters) {
     var specification = BookingTransactionSpecification.getTransactions(filters);
     return bookingTransactionRepo.findAll(specification);
   }
