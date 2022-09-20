@@ -31,17 +31,13 @@ interface XlsxRangeValidator extends Consumer<List<String>> {
       if (!pattern.matcher(n).matches()) {
         throw new InvalidRangeArgumentException("The range is invalid.");
       }
-
-      if (list.size() != 2) {
-        throw new InvalidRangeArgumentException("The range is invalid.");
-      }
     };
   }
 
   private static XlsxRangeValidator isRangeBoundsValid() {
     return list -> {
       var start = new CellAddress(list.get(0));
-      var end = new CellAddress(list.get(0));
+      var end = new CellAddress(list.get(1));
 
       if (start.getRow() < TOP_LEFT_CORNER.getRow()) {
         throw new InvalidRangeArgumentException("The start row is out of range.");

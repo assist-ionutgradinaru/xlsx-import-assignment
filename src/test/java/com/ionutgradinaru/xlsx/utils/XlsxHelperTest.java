@@ -19,22 +19,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 class XlsxHelperTest {
 
-  @Nested
-  @DisplayName("Tests for data range.")
-  class GetDataRangeFromString {
+  @Test
+  @DisplayName("Test for getting a valid DataRange object.")
+  void getDataRange_shouldReturnADataRangeObject_When_ValidRange() {
+    var range = "A3:K3";
+    var expectedResult = new XlsxDataRange(
+        new CellAddress("A3"),
+        new CellAddress("K3")
+    );
 
-    @Test
-    @DisplayName("Test for getting a valid DataRange object.")
-    void getDataRange_shouldReturnADataRangeObject_When_ValidRange() {
-      var range = "A3:K3";
-      var expectedResult = new XlsxDataRange(
-          new CellAddress("A3"),
-          new CellAddress("K3")
-      );
-
-      var result = XlsxHelper.getDataRange.apply(range);
-      assertEquals(expectedResult, result);
-    }
+    var result = XlsxHelper.getDataRange.apply(range);
+    assertEquals(expectedResult, result);
   }
 
   @Nested
