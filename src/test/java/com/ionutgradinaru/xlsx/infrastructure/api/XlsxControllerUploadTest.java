@@ -23,9 +23,10 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(XlsxController.class)
@@ -48,13 +49,17 @@ class XlsxControllerUploadTest {
   @DisplayName("Test for valid parameters.")
   void upload_ShouldReturnOk_When_ValidParams() {
     var request = multipart("/api/v1/upload")
-        .file("file", validFile.getBytes())
+        .file(validFile)
         .contentType(XlsxHelper.EXCEL_CONTENT_TYPE)
         .param("range", "A3:K50")
         .param("worksheet", "worksheet_test");
 
     mockMvc.perform(request)
         .andExpect(status().isOk());
+
+    verify(xlsxBookingService, times(1)).fromRange(any(), any(), any());
+    verify(bookingTransactionService, times(1)).saveAll(any());
+    verify(fileMetadataService, times(1)).save(any());
   }
 
   @SneakyThrows
@@ -105,11 +110,7 @@ class XlsxControllerUploadTest {
         .param("range", "A3:K50")
         .param("worksheet", "worksheet_test");
 
-    var mvcResult = mockMvc.perform(request)
-        .andExpect(request().asyncStarted())
-        .andReturn();
-
-    mockMvc.perform(asyncDispatch(mvcResult))
+    mockMvc.perform(request)
         .andExpect(status().isBadRequest());
   }
 
@@ -124,11 +125,7 @@ class XlsxControllerUploadTest {
         .param("range", range)
         .param("worksheet", "worksheet_test");
 
-    var mvcResult = mockMvc.perform(request)
-        .andExpect(request().asyncStarted())
-        .andReturn();
-
-    mockMvc.perform(asyncDispatch(mvcResult))
+    mockMvc.perform(request)
         .andExpect(status().isBadRequest())
         .andExpect(result -> assertTrue(result.getResolvedException() instanceof InvalidRangeArgumentException));
   }

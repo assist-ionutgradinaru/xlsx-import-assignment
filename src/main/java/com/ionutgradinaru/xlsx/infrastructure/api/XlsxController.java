@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,31 +39,29 @@ public class XlsxController {
   }
 
   @PostMapping(value = "/upload")
-  public CompletableFuture<Void> upload(@RequestParam("file") MultipartFile file,
-                                        @RequestParam("range") String range,
-                                        @RequestParam("worksheet") String worksheet) {
+  public void upload(@RequestParam("file") MultipartFile file,
+                     @RequestParam("range") String range,
+                     @RequestParam("worksheet") String worksheet) {
 
-    return CompletableFuture
-        .runAsync(() -> {
-          XlsxHelper.validateFileType(file.getContentType());
-          XlsxHelper.validateRangeString.accept(range);
-        })
-        .thenApply(unused -> xlsxBookingService.fromRange(file, range, worksheet))
-        .thenAccept(bookingTransactionService::saveAll)
-        .thenAccept(unused -> {
-          var fileMedata = FileMetadata.builder().name(worksheet).size(file.getSize()).build();
-          fileMetadataService.save(fileMedata);
-        });
+    // Validate parameters
+    XlsxHelper.validateFileType(file.getContentType());
+    XlsxHelper.validateRangeString.accept(range);
+
+    // Transform from Excel data to BookingTransactions and save them to DB
+    var bookingTransactions = xlsxBookingService.fromRange(file, range, worksheet);
+    bookingTransactionService.saveAll(bookingTransactions);
+
+    // Save the filemetada
+    var fileMedata = FileMetadata.builder().name(worksheet).size(file.getSize()).build();
+    fileMetadataService.save(fileMedata);
   }
 
   @GetMapping("/opportunity")
-  public CompletableFuture<List<BookingTransactionDto>> findAll(final BookingTransactionFilterDto filters) {
-    return CompletableFuture
-        .supplyAsync(() -> bookingTransactionService
-            .findAll(filters)
-            .stream()
-            .map(BookingTransactionDto::of)
-            .collect(Collectors.toList())
-        );
+  public List<BookingTransactionDto> findAll(final BookingTransactionFilterDto filters) {
+    return bookingTransactionService
+        .findAll(filters)
+        .stream()
+        .map(BookingTransactionDto::of)
+        .collect(Collectors.toList());
   }
 }

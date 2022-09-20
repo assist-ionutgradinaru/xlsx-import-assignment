@@ -26,8 +26,9 @@ interface XlsxRangeValidator extends Consumer<List<String>> {
 
   private static XlsxRangeValidator isRangeFormatValid() {
     return list -> {
-      Pattern pattern = Pattern.compile("\\b[A-Z]\\d+:[A-Z]\\d+\\b");
-      if (!pattern.matcher(String.join("", list)).matches()) {
+      Pattern pattern = Pattern.compile("[A-Z]\\d+:[A-Z]\\d+");
+      var n = String.join(":", list);
+      if (!pattern.matcher(n).matches()) {
         throw new InvalidRangeArgumentException("The range is invalid.");
       }
 
